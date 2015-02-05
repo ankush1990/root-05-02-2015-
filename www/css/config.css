@@ -13,7 +13,9 @@ body {
     background-size: cover;
 }
 
-.jumbotron {height:80%;}
+.jumbotron {
+    padding: 48px 0;
+}
 
 /* Backgroud color only*/
 .all_bgcolor{
@@ -33,16 +35,20 @@ body {
   border-color: #134562;
   color:#FFF;
   font-weight:bold;
+  border:none;
 }
-.all-btn-custom:hover,
-.all-btn-custom:focus,
-.all-btn-custom:active,
-.all-btn-custom.active {
+.all-btn-custom:hover
+ {
   background-color: #134562;
   border-color: #134562;
   color:#FFF;
 }
-
+.all-btn-custom:active
+{
+  background-color: #2F506C;
+  border-color: #2F506C;
+  color:#FFF;
+}
 /* Test blue color with hover effetc*/
 .all-text-hovereffect{
 	cursor:pointer; color:#2F506C; text-decoration:none;
@@ -73,5 +79,25 @@ input[type='password']{
 }
 
 .input-group-addon-withoutradius{
+	border-radius: 0;
+}
+
+
+/*table hover effect*/
+.table-hover tbody tr:hover td,
+.table-hover tbody tr:hover th {
+  background-color: #134562;
+  color:#FFF;
+}
+
+/*button style to show buttion inline in setup*/
+.btn-adddetail{ background-color:#2F506C; height:30px;  border:none; color:#FFF; border-radius: 0;}
+.btn-adddetail:hover{ background-color:#134562;}
+
+.btn-exit{ background-color:#d43f3a; height:30px;  border:none; color:#FFF; border-radius: 0;}
+.btn-exit:hover{ background-color:#C12E2A;}
+
+/*select box without radius*/
+.select-box-drop{
 	border-radius: 0;
 }

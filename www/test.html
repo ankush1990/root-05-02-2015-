@@ -1,0 +1,70 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="js/websocket.js">
+
+</script> 
+</head>
+<body id="globalsend">
+  Status: <span id="status"></span><br />
+  URL: <input id="url" /><br />
+  <input id="open" type="button" value="Connect" style="display:none" />&nbsp;
+  <input id="close" type="button" value="Disconnect"  style="display:none"/><br />
+  <input id="send" type="button" value="Send"  />&nbsp;
+  <input id="text" type="hidden" value='[{"socketname" : "hvac_data","orgid" : 1,"slocid" : 1,"thermid" : 1}]' /><br />
+  <span id="message"></span>
+</body>
+<script>
+
+var Header_load=setTimeout(function(){call_websocket()},1500);
+</script>
+</html>-->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+</head>
+
+<body>
+
+
+         <div  id="loadLocationdetaildata" class="col-sm-9" ng-app="" ng-controller="customersController">
+        <table class="table table-hover">
+           <thead>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4>Location List</h4>
+                        <div class="btn-group pull-right">
+                             <div class="form-group has-feedback">
+                                <input type="text" class="form-control" id="inputSuccess2" onKeyUp="searchLocation(true,this.value)" placeholder="Enter Location Name"/>
+                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              <tr>
+                 <th>Sr No.</th><th>Location Name</th><th>Created On</th><th>Action</th>
+              </tr>
+           </thead>
+           <tbody>
+          		<tr ng-repeat="x in names">
+  				<td>{{ x.location_name+ ', ' + x.org_id}}</td>
+				</tr>
+           </tbody>
+         </table>   
+        </div>
+      
+
+<script>
+
+
+
+function customersController($scope,$http) {
+  $http.get("http://192.168.1.102:1837/get_location?slocid=1&orgid=1")
+  .success(function(response) {$scope.names = response;});
+}
+</script>
+</body>
+</html>

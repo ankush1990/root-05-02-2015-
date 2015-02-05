@@ -3,24 +3,27 @@
 <head>
 <meta charset="utf-8">
 <title>Root</title>
-<link rel="icon" href="images/root2.png" />
+<link rel="icon" href="images/favicon.png" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Root - magnum energy solutions">
-<meta name="author" content="Magnum">
+<meta name="author" content="Magnum">.
+
 <link href='css/bootstrap.min.css' rel='stylesheet'>
 <link href='css/config.css' rel='stylesheet'>
-<link href='css/registration.css' rel='stylesheet'>
+
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/ajax_request.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function(){
+	var d = new Date();
+	var n = d.toDateString();
+	document.getElementById("header-date").innerHTML = n;
 	$(".close").click(function(){
 		$("#myAlert").alert('close');
 	});
-	$("#includ-header").load("index-header.html");
 }); 
-
 
 function validate_user(bool,response){
 	if(bool){
@@ -44,15 +47,25 @@ function validate_user(bool,response){
 			<a  class="close" data-dismiss="alert">&times;</a>\<strong>Error! </strong>Incorrect username or password.</div>';
 		}
 		else{
-			window.location="home.php";
+			sessionStorage.setItem("userid", obj[0].user_id);
+			sessionStorage.setItem("slocid",obj[0].sloc_id);
+			sessionStorage.setItem("orgid", obj[0].org_id);
+			sessionStorage.setItem("username", obj[0].username);
+			
+			window.location="home.html";
 		} 
 	}
 }
 </script>
 </head>
 <body>
-<!--Included header footer code using JS-->
-<div id="includ-header"></div>
+<!--Included header-->
+<div class="jumbotron all_bgcolor_withfontcolor" style="margin-top: -40px;">
+	<div class="col-sm-1"></div>
+    	<div class="col-sm-8"><span style="font-size:32px"><a href="index.html" style="text-decoration:none; color:#FFF;">[ root ]</a></span></div>
+        <div  class="col-sm-3"><span id="header-date" style="font-size:26px"></span></div>
+    	<p></p>    
+</div>
 <!--Alert for incorrect Username and Password-->
 <div class="col-sm-12" >
     <div class="col-sm-4"></div>
@@ -65,7 +78,7 @@ function validate_user(bool,response){
   <div class="row">
     <div class="col-sm-6"></div>
     <div class="col-sm-4" >
-    <form method="post" action="home.php"  role="form" autocomplete="off" onSubmit="return validate_user('true','ok')">
+    <form method="post" action="home.html"  role="form" autocomplete="off" onSubmit="return validate_user('true','ok')">
       <label for="email">Username:</label>
       	<div class="input-group" style="margin-bottom: 25px">
             <span class="input-group-addon input-group-addon-withoutradius">
@@ -100,6 +113,12 @@ function validate_user(bool,response){
     </form>
     </span>
     </div>
+  </div>
+</div>
+<!--Included Footer-->
+<div class="footer navbar-fixed-bottom all_bgcolor">
+  <div class="container">
+    <p></p>
   </div>
 </div>
 </body>

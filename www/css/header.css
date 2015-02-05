@@ -2,7 +2,7 @@
 /* CSS Document */
 
 .navbar-custom {
-	background-color: #0F9D58;
+	background-color: #134562;
     color:#ffffff;
   	border-radius:0;
     min-height:auto;
@@ -23,7 +23,7 @@
       
 .navbar-custom .navbar-nav > li > a:hover, .nav > li > a:focus {
     text-decoration: none;
-    background-color: #0d9352;
+    background-color: #2F506C;
 }
       
 .navbar-custom .navbar-brand {
@@ -46,6 +46,6 @@
 }
 
 .navactive{
- 	background-color:#0d9352;
+ 	background-color:#2F506C;
 }
 

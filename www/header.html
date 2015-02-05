@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link rel="icon" href="images/favicon.png" />
+<link href='css/header.css' rel='stylesheet'>
+<link href='css/config.css' rel='stylesheet'>
+<style>
+
+.table-hover>tbody>tr:hover>td, .table-hover>tbody>tr:hover>th {
+  background-color:#EFF1F1;
+}
+
+body {
+    background: url(images/root2.png);
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+</style>
+<script src="js/ajax_request.js"></script>
+
+<script>
+var slocid = sessionStorage.getItem("slocid");
+var orgid =	sessionStorage.getItem("orgid");
+var userid = sessionStorage.getItem("userid");
+var locid;		
+$(document).ready(function(){
+	if((sessionStorage.getItem("userid") != null) && ((sessionStorage.getItem("userid").length) > 0)){
+	 //window.location="index.html";
+	}
+	else{
+	 window.location="index.html";
+	}
+}); 
+
+function loadpageheader(id){
+	document.getElementById(id).className = 'navactive';
+}
+
+function changethermostat(event){
+	var target = event.target || event.srcElement;
+	document.getElementById("thermostat_value").innerHTML = event.target.innerHTML;
+	sessionStorage.setItem("selected_therm", event.target.innerHTML);
+	location.reload();
+}
+
+function loadthermostat_after_refresh(bool,id){
+	if(bool){
+		pagename = "loc_map_thermostat";
+		var data_parameters = "slocid="+slocid+ "&orgid="+orgid+ "&locid="+locid;
+		ajax_request(true,pagename,data_parameters,loadthermostatinulbox);
+	}else{
+		var obj = JSON.parse(response);
+		var str = "";
+		for(var i = 0; i < obj.length; i++){
+			str += '<li onclick="changethermostat(event);">\<a>'+obj[i].thermostat_name+'</a>\</li>';
+		}
+		document.getElementById("thermostat_value_inner").innerHTML = str;
+		document.getElementById("thermostat_value").innerHTML = id;
+	}
+}
+	
+
+function loadlocationinulbox(bool,response){
+	if(bool){
+		pagename = "user_map_loc";
+		var data_parameters = "slocid="+slocid+ "&orgid="+orgid+ "&userid="+userid;
+		ajax_request(true,pagename,data_parameters,loadlocationinulbox);
+	}else{
+		var obj = JSON.parse(response);
+		var str = "<li><a>Select Location</a></li>";
+		for(var i = 0; i < obj.length; i++){
+			str += '<li onclick="loadlocationinulbox(event);">\<a>'+obj[i].location_name+'</a>\</li>';
+		}
+		document.getElementById("location_value_inner").innerHTML = str;
+		document.getElementById("location_value").innerHTML = obj[0].location_name;
+		sessionStorage.setItem("locid",obj[0].uml_location_id); 
+		loadthermostatinulbox(true,"ok");
+	}
+}
+
+
+function loadthermostatinulbox(bool,response){
+	if(bool){
+		locid = sessionStorage.getItem("locid");
+		pagename = "loc_map_thermostat";
+		var data_parameters = "slocid="+slocid+ "&orgid="+orgid+ "&locid="+locid;
+		ajax_request(true,pagename,data_parameters,loadthermostatinulbox);
+	}else{
+		var obj = JSON.parse(response);
+		var str = "<li><a>Select Thermostat</a></li>";
+		for(var i = 0; i < obj.length; i++){
+			str += '<li onclick="changethermostat(event);">\<a>'+obj[i].thermostat_name+'</a>\</li>';
+		}
+		document.getElementById("thermostat_value_inner").innerHTML = str;
+		document.getElementById("thermostat_value").innerHTML = obj[0].thermostat_name;
+	}
+}
+
+//======================Maintain Session=================
+var GlobalSensonLogoutEvent = "";
+function flash() {
+	var d = new Date();
+	if(GlobalSensonLogoutEvent != ""){
+		var Timediff =  d.getTime() - GlobalSensonLogoutEvent;
+		var seconds = Timediff / 1000;
+		var minutes = parseInt( seconds / 60 );
+		if(minutes >= 5){
+			window.location.href = 'logout.html';
+		}
+	}
+	GlobalSensonLogoutEvent = d.getTime();
+}
+window.onclick = flash;
+//======================Maintain Session=================
+</script>
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-custom navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigationbar">
+       <span class="sr-only">Toggle navigation</span>
+       <span class="icon-bar"></span>
+       <span class="icon-bar"></span>
+       <span class="icon-bar"></span>
+     </button>
+      <a class="navbar-brand" href="home.html" style="font-size:24px">[ root ]</a>
+    </div>
+    <div>
+    <div class="collapse navbar-collapse" id="navigationbar">
+      <ul class="nav navbar-nav" style="cursor:pointer;">
+      	
+        <li id="home" onclick="loadpageheader(this.id)"><a href="home.html"><img src="images/Icon/newicon/Home_20.png"> &nbsp;Home</a></li>
+       <!-- <li id="analytics" onclick="loadpageheader(this.id)"><a href="analytics.php"><span class="glyphicon glyphicon-stats"></span>  &nbsp;Analytics</a></li>-->
+        <li id="setup" onclick="loadpageheader(this.id)"><a href="setup.html"><img src="images/Icon/newicon/admin.png"  height="20" width="20"> &nbsp;Admin setup</a></li>
+      </ul>
+       <ul class="nav navbar-nav navbar-right">
+           <!-- drop down for Location -->
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown"><span  id="location_value"> Select Location</span> <span class="caret"></span></a>
+              <ul class="dropdown-menu" id="location_value_inner">
+              
+              </ul>
+            </li>
+            <!-- drop down for thermostat -->
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown"><span  id="thermostat_value"> Select Thermostat</span> <span class="caret"></span></a>
+              <ul class="dropdown-menu" id="thermostat_value_inner">
+              
+              </ul>
+            </li>
+            <li><a href="logout.html"><span class="glyphicon glyphicon-log-out"></span> &nbsp;Logout</a></li>
+       </ul>
+       
+       </div>
+    </div>
+  </div>
+</nav>
+
+<div class="footer navbar-fixed-bottom all_bgcolor">
+  <div class="container">
+    <p></p>
+  </div>
+</div>
+</body>
+<script>
+flash();
+loadlocationinulbox(true,"ok");
+</script>
+</html>

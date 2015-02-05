@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app="">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Root</title>
+<link rel="icon" href="images/root2.png" />
+<link href='css/bootstrap.min.css' rel='stylesheet'>
+<link href='datetimepicker/css/bootstrap-datetimepicker.min.css' rel='stylesheet'>
+<link rel="stylesheet" href="css/bootstrap-theme.css">
+<link href='css/config.css' rel='stylesheet' />
+
+<script src="js/jquery.min.js"></script>
+<script src="js/angular.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="datetimepicker/js/moment.js"></script>
+<script src="datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+
+<script>
+var temp = "";
+var global_setup_menu = "";
+
+function loadsetuppage(id){
+	
+	if(temp != ""){
+		document.getElementById(temp).className = '';
+	}
+	temp = id;
+	document.getElementById(id).className = 'active';
+	$("#setuppageload").load(id);
+}
+
+var Header_load=setTimeout(function(){loadpageheader('setup')},500);
+</script>
+</head>
+
+<body onload="loadsetuppage('schedule.html')">
+
+<!-- Header -->
+<div ng-include="'header.html'"></div>
+<!-- Header -->  
+		<ul class="nav nav-tabs" style="cursor:pointer; margin-top:80px;">
+            <li id="schedule.html" onclick="loadsetuppage(this.id)"><a>Schedule</a></li>
+            <li id="location.html" onclick="loadsetuppage(this.id)"><a>Location</a></li>
+            <li id="thermostat.html" onclick="loadsetuppage(this.id)"><a>Thermostat</a></li>
+        </ul>
+      
+
+<div id="setuppageload"></div>
+</body>
+</html>
